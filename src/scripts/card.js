@@ -1,6 +1,6 @@
 function createCard (cardData, deleteCallBack, openCallBack, likeCallBack) {
   const cardTemplate = document.querySelector('#card-template').content;
-  const cardElement = cardTemplate.querySelector('.places__item').cloneNode(true);
+  const cardElement = cardTemplate.cloneNode(true);
   cardElement.querySelector('.card__image').src = cardData.link;
   cardElement.querySelector('.card__image').alt = cardData.alt;
   cardElement.querySelector('.card__title').textContent = cardData.name;
@@ -12,12 +12,12 @@ function createCard (cardData, deleteCallBack, openCallBack, likeCallBack) {
   return cardElement;
 }
 
-function likeCard(evt) {
+function handleLikeCard(evt) {
   evt.target.classList.toggle('card__like-button_is-active');
 }
 
-function deleteCard(evt) {
+function handleDeleteCard(evt) {
   evt.target.closest('.places__item').remove();
 }
 
-export { createCard, likeCard, deleteCard };
+export { createCard, handleLikeCard, handleDeleteCard };
