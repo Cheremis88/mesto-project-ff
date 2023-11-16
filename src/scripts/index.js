@@ -1,6 +1,6 @@
 import '../pages/index.css';
 import { initialCards } from './cards.js';
-import { openModal, closeModal, closeModalEsc } from './modal.js';
+import { openModal, closeModal, closeModalEsc, handleCheckClickModal } from './modal.js';
 import { createCard, handleLikeCard, handleDeleteCard } from './card.js';
 
 
@@ -62,12 +62,6 @@ function handleOpenImage(imageData) {
   openModal(imagePopup);
 }
 
-function handleCheckClickModal(evt) {
-  if (evt.target.classList.contains('popup__close') ||
-      evt.target === evt.currentTarget) {
-        closeModal(evt.currentTarget);
-      }
-}
 
 profileButton.addEventListener('click', handlePrepareProfile);
 profileForm.addEventListener('submit', handleEditProfile);

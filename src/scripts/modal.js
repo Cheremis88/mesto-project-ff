@@ -15,4 +15,12 @@ function closeModalEsc(evt) {
   }
 }
 
-export { openModal, closeModal, closeModalEsc };
+function handleCheckClickModal(evt) {
+  if (evt.target.classList.contains('popup__close') ||
+      evt.target === evt.currentTarget) {
+        closeModal(evt.currentTarget);
+      }
+}
+
+
+export { openModal, closeModal, closeModalEsc, handleCheckClickModal };
