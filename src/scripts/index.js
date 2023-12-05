@@ -2,7 +2,7 @@ import '../pages/index.css';
 import { initialCards } from './cards.js';
 import { openModal, closeModal, closeModalEsc, handleCheckClickModal } from './modal.js';
 import { createCard, handleLikeCard, handleDeleteCard } from './card.js';
-
+import { enableValidation, clearValidation } from './validation.js';
 
 const profileButton = document.querySelector('.profile__edit-button');
 const profilePopup = document.querySelector('.popup_type_edit');
@@ -25,8 +25,17 @@ const imageCaption = document.querySelector('.popup__caption');
 const popups = document.querySelectorAll('.popup');
 const cardList = document.querySelector('.places__list');
 
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+};
 
 function handlePrepareProfile() {
+  clearValidation(profileForm, validationConfig);
   profileFormName.value = profileName.textContent;
   profileFormAbout.value = profileAbout.textContent;
   openModal(profilePopup);
@@ -40,6 +49,7 @@ function handleEditProfile(evt) {
 }
 
 function handlePrepareCard() {
+  clearValidation(newCardForm, validationConfig);
   newCardForm.reset();
   openModal(newCardPopup);
 }
@@ -57,17 +67,15 @@ function handleAddNewCard(evt) {
 
 function handleOpenImage(imageData) {
   imageFull.src = imageData.link;
-  imageFull.alt = imageData.name;
+  imageFull.alt = imageData.alt;
   imageCaption.textContent = imageData.name;
   openModal(imagePopup);
 }
-
 
 profileButton.addEventListener('click', handlePrepareProfile);
 profileForm.addEventListener('submit', handleEditProfile);
 newCardButton.addEventListener('click', handlePrepareCard);
 newCardForm.addEventListener('submit', handleAddNewCard);
-
 
 initialCards.forEach(card => {
   cardList.append(createCard(card, handleDeleteCard, handleOpenImage, handleLikeCard));
@@ -76,3 +84,5 @@ initialCards.forEach(card => {
 popups.forEach(popup => {
   popup.addEventListener('click', handleCheckClickModal);
 })
+
+enableValidation(validationConfig);
