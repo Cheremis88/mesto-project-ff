@@ -1,5 +1,4 @@
 import '../pages/index.css';
-import { initialCards } from './cards.js';
 import { openModal, closeModal, closeModalEsc, handleCheckClickModal } from './modal.js';
 import { createCard, handleLikeCard, handleDeleteCard } from './card.js';
 import { enableValidation, clearValidation } from './validation.js';
@@ -42,12 +41,12 @@ function handlePrepareProfile() {
   openModal(profilePopup);
 }
 
-function handleEditProfile(evt) {
+/* function handleEditProfile(evt) {
   evt.preventDefault();
   profileName.textContent = profileFormName.value;
   profileAbout.textContent = profileFormAbout.value;
   closeModal(profilePopup);
-}
+} */
 
 function handlePrepareCard() {
   clearValidation(newCardForm, validationConfig);
@@ -55,7 +54,7 @@ function handlePrepareCard() {
   openModal(newCardPopup);
 }
 
-function handleAddNewCard(evt) {
+/* function handleAddNewCard(evt) {
   evt.preventDefault();
   const newCard = {
     name: newCardFormName.value,
@@ -64,7 +63,7 @@ function handleAddNewCard(evt) {
   };
   cardList.prepend(createCard(newCard, handleDeleteCard, handleOpenImage, handleLikeCard));
   closeModal(newCardPopup);
-}
+} */
 
 function handleOpenImage(imageData) {
   imageFull.src = imageData.link;
@@ -74,9 +73,9 @@ function handleOpenImage(imageData) {
 }
 
 profileButton.addEventListener('click', handlePrepareProfile);
-profileForm.addEventListener('submit', handleEditProfile);
+profileForm.addEventListener('submit', patchProfile);
 newCardButton.addEventListener('click', handlePrepareCard);
-newCardForm.addEventListener('submit', handleAddNewCard);
+newCardForm.addEventListener('submit', postCard);
 
 popups.forEach(popup => {
   popup.addEventListener('click', handleCheckClickModal);
@@ -103,14 +102,6 @@ function getProfile() {
     .then(checkResponse);
 }
 
-function checkResponse(res) {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject('Ошибка ' + res.status);
-}
-
-
 function getCards() {
   return fetch(config.baseUrl + '/cards', {
     method: 'GET',
@@ -118,6 +109,53 @@ function getCards() {
   })
     .then(checkResponse);
 }
+
+function patchProfile(evt) {
+  evt.preventDefault();
+
+  fetch(config.baseUrl + '/users/me', {
+    method: 'PATCH',
+    headers: config.headers,
+    body: JSON.stringify({
+      name: profileFormName.value,
+      about: profileFormAbout.value
+    })
+  })
+    .then(checkResponse)
+    .then(profile => {
+      profileName.textContent = profile.name;
+      profileAbout.textContent = profile.about;
+    })
+    .catch(err => console.log(err))
+    .finally(() => closeModal(profilePopup));
+}
+
+function postCard(evt) {
+  evt.preventDefault();
+
+  fetch(config.baseUrl + '/cards', {
+    method: 'POST',
+    headers: config.headers,
+    body: JSON.stringify({
+      name: newCardFormName.value,
+      link: newCardFormLink.value
+    })
+  })
+    .then(checkResponse)
+    .then(newCard => {
+      cardList.prepend(createCard(newCard, newCard.owner._id, handleDeleteCard, handleOpenImage, handleLikeCard));
+    })
+    .catch(err => console.log(err))
+    .finally(() => closeModal(newCardPopup));
+}
+
+function checkResponse(res) {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject('Ошибка ' + res.status);
+}
+
 
 
 Promise.all([getProfile(), getCards()])
@@ -133,3 +171,15 @@ Promise.all([getProfile(), getCards()])
     });
   })
   .catch(err => console.log(err));
+
+
+/* fetch(config.baseUrl + '/users', {
+    method: 'GET',
+    headers: config.headers
+  })
+    .then(checkResponse)
+    .then(res => {
+      let xx = res.filter(user => user.name !== 'Jacques Cousteau' || user.about !== 'Sailor, researcher')
+      let yy = xx.map(item => new Object({name: item.name, about: item.about}))
+      console.log(yy)
+    }) */
