@@ -8,6 +8,7 @@ const profileButton = document.querySelector('.profile__edit-button');
 const profilePopup = document.querySelector('.popup_type_edit');
 const profileName = document.querySelector('.profile__title');
 const profileAbout = document.querySelector('.profile__description');
+const profilePhoto = document.querySelector('.profile__image');
 const profileForm = document.forms['edit-profile'];
 const profileFormName = profileForm.elements.name;
 const profileFormAbout = profileForm.elements.description;
@@ -77,12 +78,58 @@ profileForm.addEventListener('submit', handleEditProfile);
 newCardButton.addEventListener('click', handlePrepareCard);
 newCardForm.addEventListener('submit', handleAddNewCard);
 
-initialCards.forEach(card => {
-  cardList.append(createCard(card, handleDeleteCard, handleOpenImage, handleLikeCard));
-});
-
 popups.forEach(popup => {
   popup.addEventListener('click', handleCheckClickModal);
 })
 
 enableValidation(validationConfig);
+
+ 
+
+const config = {
+  baseUrl: 'https://nomoreparties.co/v1/wff-cohort-2',
+  headers: {
+    authorization: '1c72ad99-3ee9-41c8-bf1b-bf3b0845e8c9',
+    'Content-Type': 'application/json'
+  }
+}
+
+
+function getProfile() {
+  return fetch(config.baseUrl + '/users/me', {
+    method: 'GET',
+    headers: config.headers
+  })
+    .then(checkResponse);
+}
+
+function checkResponse(res) {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject('Ошибка ' + res.status);
+}
+
+
+function getCards() {
+  return fetch(config.baseUrl + '/cards', {
+    method: 'GET',
+    headers: config.headers
+  })
+    .then(checkResponse);
+}
+
+
+Promise.all([getProfile(), getCards()])
+  .then(results => {
+    const [profile, cards] = results;
+    const {name, about, avatar, _id} = profile;
+    profileName.textContent = name;
+    profileAbout.textContent = about;
+    profilePhoto.style.backgroundImage = `url(${avatar})`;
+    
+    cards.forEach(card => {
+      cardList.append(createCard(card, _id, handleDeleteCard, handleOpenImage, handleLikeCard));
+    });
+  })
+  .catch(err => console.log(err));
