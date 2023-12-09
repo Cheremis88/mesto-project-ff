@@ -9,7 +9,9 @@ function createCard (cardData, userId, deleteCallBack, openCallBack, likeCallBac
     openCallBack(cardData);
   });
   cardElement.querySelector('.card__like-button').addEventListener('click', likeCallBack);
-  cardElement.querySelector('.card__delete-button').addEventListener('click', deleteCallBack);
+  cardElement.querySelector('.card__delete-button').addEventListener('click', evt => {
+    deleteCallBack(evt, cardData._id);
+  });
 
   if (cardData.likes.length > 0) {
     cardElement.querySelector('.card__like-count').classList.add('card__like-count_is-active');
@@ -27,8 +29,13 @@ function handleLikeCard(evt) {
   evt.target.classList.toggle('card__like-button_is-active');
 }
 
-function handleDeleteCard(evt) {
-  evt.target.closest('.places__item').remove();
+function handleDeleteCard(evt, cardId) {
+  deleteCard(cardId)
+    .then(() => {
+      evt.target.closest('li').remove();
+    })
+    .catch(err => console.log(err));
 }
 
+import { deleteCard } from "./api";
 export { createCard, handleLikeCard, handleDeleteCard };
