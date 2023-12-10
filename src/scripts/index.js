@@ -1,14 +1,14 @@
 import '../pages/index.css';
-import { openModal, closeModal, closeModalEsc, handleCheckClickModal } from './modal.js';
+import { openModal, closeModal, handleCheckClickModal } from './modal.js';
 import { createCard, handleLikeCard, handleDeleteCard } from './card.js';
 import { enableValidation, clearValidation } from './validation.js';
 import { 
   profileButton, profilePopup, profileName, profileAbout, profilePhoto,
-  profileForm, profileFormName, profileFormAbout, newCardButton, newCardPopup,
+  profileForm, profileFormName, profileFormAbout, newCardButton, newCardPopup,  // Как лучше оформлять большие блоки импорта?
   newCardForm, newCardFormName, newCardFormLink, imagePopup, imageFull,
-  imageCaption, popups, cardList, validationConfig, requestConfig
+  imageCaption, popups, cardList, validationConfig
 } from './constants.js';
-import { getProfile, getCards, patchProfile, postCard, deleteCard } from './api.js';
+import { getProfile, getCards, patchProfile, postCard, getStudents } from './api.js';
 
 
 
@@ -92,14 +92,4 @@ popups.forEach(popup => {
 
 enableValidation(validationConfig);
 
-
-/* fetch(config.baseUrl + '/users', {
-    method: 'GET',
-    headers: config.headers
-  })
-    .then(checkResponse)
-    .then(res => {
-      let xx = res.filter(user => user.name !== 'Jacques Cousteau' || user.about !== 'Sailor, researcher')
-      let yy = xx.map(item => new Object({name: item.name, about: item.about}))
-      console.log(yy)
-    }) */
+getStudents();

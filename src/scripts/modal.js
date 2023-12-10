@@ -22,4 +22,4 @@ function handleCheckClickModal(evt) {
       }
 }
 
-export { openModal, closeModal, closeModalEsc, handleCheckClickModal };
+export { openModal, closeModal, handleCheckClickModal };

@@ -1,5 +1,5 @@
 import { requestConfig } from "./constants";
-export { getProfile, getCards, patchProfile, postCard, deleteCard };
+export { getProfile, getCards, patchProfile, postCard, deleteCard, putLike, deleteLike, getStudents };
 
 function sendRequest(endPoint, options) {
   return fetch(requestConfig.baseUrl + endPoint, options)
@@ -52,6 +52,35 @@ function postCard(name, link) {
 function deleteCard(cardId) {
   return sendRequest('cards/' + cardId, {
     method: 'DELETE',
-    headers: requestConfig.headers,
+    headers: requestConfig.headers
   });
+}
+
+function deleteLike(cardId) {
+  return sendRequest('cards/likes/' + cardId, {
+    method: 'DELETE',
+    headers: requestConfig.headers
+  });
+}
+
+function putLike(cardId) {
+  return sendRequest('cards/likes/' + cardId, {
+    method: 'PUT',
+    headers: requestConfig.headers
+  });
+}
+
+// Не забудь удалить
+
+function getStudents() {
+  fetch(requestConfig.baseUrl + '/users', {
+    method: 'GET',
+    headers: requestConfig.headers
+  })
+    .then(checkResponse)
+    .then(res => {
+      let xx = res.filter(user => user.name !== 'Jacques Cousteau' || user.about !== 'Sailor, researcher');
+      let yy = xx.map(item => new Object({name: item.name, about: item.about}));
+      console.log(yy)
+    })
 }
