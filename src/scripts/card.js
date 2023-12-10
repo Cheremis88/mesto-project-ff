@@ -53,13 +53,6 @@ function setLikeState(likeButton, likeCount, card, userId) {
   likeCount.textContent = card.likes.length;
 }
 
-function handleDeleteCard(evt, cardId) {
-  deleteCard(cardId)
-    .then(() => {
-      evt.target.closest('.card').remove();
-    })
-    .catch(err => console.log(err));
-}
 
-import { deleteCard, putLike, deleteLike } from "./api";
-export { createCard, handleLikeCard, handleDeleteCard };
+import { putLike, deleteLike } from "./api";
+export { createCard, handleLikeCard };

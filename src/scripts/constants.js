@@ -6,12 +6,17 @@ const profilePhoto = document.querySelector('.profile__image');
 const profileForm = document.forms['edit-profile'];
 const profileFormName = profileForm.elements.name;
 const profileFormAbout = profileForm.elements.description;
+const avatarPopup = document.querySelector('.popup_type_avatar');
+const avatarForm = document.forms['edit-avatar'];
+const avatarFormLink = avatarForm.elements.link;
 
 const newCardButton = document.querySelector('.profile__add-button');
 const newCardPopup = document.querySelector('.popup_type_new-card');
 const newCardForm = document.forms['new-place'];
 const newCardFormName = newCardForm.elements['place-name'];
 const newCardFormLink = newCardForm.elements.link;
+const deleteCardPopup = document.querySelector('.popup_type_delete-card');
+const deleteCardForm = document.forms['delete-card'];
 
 const imagePopup = document.querySelector('.popup_type_image');
 const imageFull = document.querySelector('.popup__image');
@@ -41,5 +46,6 @@ export {
   profileButton, profilePopup, profileName, profileAbout, profilePhoto,
   profileForm, profileFormName, profileFormAbout, newCardButton, newCardPopup,
   newCardForm, newCardFormName, newCardFormLink, imagePopup, imageFull,
-  imageCaption, popups, cardList, validationConfig, requestConfig
+  imageCaption, popups, cardList, validationConfig, requestConfig, avatarPopup,
+  avatarForm, avatarFormLink, deleteCardPopup, deleteCardForm
 };

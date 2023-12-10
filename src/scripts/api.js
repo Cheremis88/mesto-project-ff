@@ -1,5 +1,5 @@
 import { requestConfig } from "./constants";
-export { getProfile, getCards, patchProfile, postCard, deleteCard, putLike, deleteLike, getStudents };
+export { getProfile, getCards, patchProfile, postCard, deleteCard, putLike, deleteLike, patchAvatar, getStudents };
 
 function sendRequest(endPoint, options) {
   return fetch(requestConfig.baseUrl + endPoint, options)
@@ -70,6 +70,17 @@ function putLike(cardId) {
   });
 }
 
+function patchAvatar(avatar) {
+  return sendRequest('users/me/avatar', {
+    method: 'PATCH',
+    headers: requestConfig.headers,
+    body: JSON.stringify({
+      avatar
+    })
+  });
+}
+
+
 // Не забудь удалить
 
 function getStudents() {
@@ -80,7 +91,7 @@ function getStudents() {
     .then(checkResponse)
     .then(res => {
       let xx = res.filter(user => user.name !== 'Jacques Cousteau' || user.about !== 'Sailor, researcher');
-      let yy = xx.map(item => new Object({name: item.name, about: item.about}));
+      let yy = xx.map(item => new Object({name: item.name, about: item.about, avatar: item.avatar}));
       console.log(yy)
     })
 }
