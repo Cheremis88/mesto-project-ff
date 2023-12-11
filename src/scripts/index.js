@@ -9,7 +9,7 @@ import {
   imageCaption, popups, cardList, validationConfig, avatarPopup, avatarForm,
   avatarFormLink, deleteCardPopup, deleteCardForm
 } from './constants.js';
-import { getProfile, getCards, patchProfile, postCard, patchAvatar, deleteCard, getStudents } from './api.js';
+import { getProfile, getCards, patchProfile, postCard, patchAvatar, deleteCard } from './api.js';
 
 let cardForDelete = [];  // Так как openModal принимает на вход только попап, то создаю глобальную переменную для переброса данных об удаляемой карточке в форму удаления
 
@@ -39,10 +39,10 @@ function handleSaveProfile(evt) {
     .then(profile => {
       profileName.textContent = profile.name;
       profileAbout.textContent = profile.about;
+      closeModal(profilePopup);
     })
     .catch(err => console.log(err))
     .finally(() => {
-      closeModal(profilePopup);
       evt.submitter.textContent = 'Сохранить';
     });
 }
@@ -59,10 +59,10 @@ function handleChangeAvatar(evt) {
   patchAvatar(avatarFormLink.value)
     .then(profile => {
       profilePhoto.style.backgroundImage = `url(${profile.avatar})`;
+      closeModal(avatarPopup);
     })
     .catch(err => console.log(err))
     .finally(() => {
-      closeModal(avatarPopup);
       evt.submitter.textContent = 'Сохранить';
     });
 }
@@ -75,15 +75,15 @@ function handlePrepareCard() {
 
 function handleAddCard(evt) {
   evt.preventDefault();
-  evt.submitter.textContent = 'Сохранение...';
+  evt.submitter.textContent = 'Создание...';
   postCard(newCardFormName.value, newCardFormLink.value)
     .then(newCard => {
       cardList.prepend(createCard(newCard, newCard.owner._id, handleOpenDeletePopup, handleOpenImage, handleLikeCard));
+      closeModal(newCardPopup);
     })
     .catch(err => console.log(err))
     .finally(() => {
-      closeModal(newCardPopup);
-      evt.submitter.textContent = 'Сохранить';
+      evt.submitter.textContent = 'Создать';
     });
 }
 
@@ -106,10 +106,10 @@ function handleDeleteCard(evt) {
   deleteCard(cardId)
     .then(() => {
       cardElement.remove();
+      closeModal(deleteCardPopup);
     })
     .catch(err => console.log(err))
     .finally(() => {
-      closeModal(deleteCardPopup);
       evt.submitter.textContent = 'Да';
     });
 }
@@ -135,5 +135,3 @@ popups.forEach(popup => {
 })
 
 enableValidation(validationConfig);
-
-getStudents();

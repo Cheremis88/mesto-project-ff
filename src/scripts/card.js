@@ -1,3 +1,6 @@
+import { putLike, deleteLike } from "./api";
+export { createCard, handleLikeCard };
+
 function createCard (cardData, userId, deleteCallBack, openCallBack, likeCallBack) {
   const cardTemplate = document.querySelector('#card-template').content;
   const cardElement = cardTemplate.cloneNode(true);
@@ -38,6 +41,8 @@ function handleLikeCard(evt, cardId, userId) {
 }
 
 function setLikeState(likeButton, likeCount, card, userId) {
+  likeCount.textContent = card.likes.length;
+
   if (card.likes.length > 0) {
     likeCount.classList.add('card__like-count_is-active');
   } else {
@@ -49,10 +54,4 @@ function setLikeState(likeButton, likeCount, card, userId) {
   } else {
     likeButton.classList.remove('card__like-button_is-active');
   }
-
-  likeCount.textContent = card.likes.length;
 }
-
-
-import { putLike, deleteLike } from "./api";
-export { createCard, handleLikeCard };

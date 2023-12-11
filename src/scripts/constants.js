@@ -1,3 +1,11 @@
+export {
+  profileButton, profilePopup, profileName, profileAbout, profilePhoto,
+  profileForm, profileFormName, profileFormAbout, newCardButton, newCardPopup,
+  newCardForm, newCardFormName, newCardFormLink, imagePopup, imageFull,
+  imageCaption, popups, cardList, validationConfig, requestConfig, avatarPopup,
+  avatarForm, avatarFormLink, deleteCardPopup, deleteCardForm
+};
+
 const profileButton = document.querySelector('.profile__edit-button');
 const profilePopup = document.querySelector('.popup_type_edit');
 const profileName = document.querySelector('.profile__title');
@@ -41,11 +49,3 @@ const requestConfig = {
     'Content-Type': 'application/json'
   }
 }
-
-export {
-  profileButton, profilePopup, profileName, profileAbout, profilePhoto,
-  profileForm, profileFormName, profileFormAbout, newCardButton, newCardPopup,
-  newCardForm, newCardFormName, newCardFormLink, imagePopup, imageFull,
-  imageCaption, popups, cardList, validationConfig, requestConfig, avatarPopup,
-  avatarForm, avatarFormLink, deleteCardPopup, deleteCardForm
-};

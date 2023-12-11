@@ -1,3 +1,5 @@
+export { openModal, closeModal, handleCheckClickModal };
+
 function openModal(popup) {
   popup.classList.add('popup_is-opened');
   document.addEventListener('keydown', closeModalEsc);
@@ -21,5 +23,3 @@ function handleCheckClickModal(evt) {
         closeModal(evt.currentTarget);
       }
 }
-
-export { openModal, closeModal, handleCheckClickModal };

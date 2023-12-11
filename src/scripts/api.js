@@ -1,5 +1,5 @@
 import { requestConfig } from "./constants";
-export { getProfile, getCards, patchProfile, postCard, deleteCard, putLike, deleteLike, patchAvatar, getStudents };
+export { getProfile, getCards, patchProfile, postCard, deleteCard, putLike, deleteLike, patchAvatar };
 
 function sendRequest(endPoint, options) {
   return fetch(requestConfig.baseUrl + endPoint, options)
@@ -78,20 +78,4 @@ function patchAvatar(avatar) {
       avatar
     })
   });
-}
-
-
-// Не забудь удалить
-
-function getStudents() {
-  fetch(requestConfig.baseUrl + '/users', {
-    method: 'GET',
-    headers: requestConfig.headers
-  })
-    .then(checkResponse)
-    .then(res => {
-      let xx = res.filter(user => user.name !== 'Jacques Cousteau' || user.about !== 'Sailor, researcher');
-      let yy = xx.map(item => new Object({name: item.name, about: item.about, avatar: item.avatar}));
-      console.log(yy)
-    })
 }

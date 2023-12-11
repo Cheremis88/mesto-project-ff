@@ -1,3 +1,5 @@
+export { enableValidation, clearValidation };
+
 function enableValidation(classes) {
   const formList = document.querySelectorAll(classes.formSelector); // Надо ли на всякий случай всегда преобразовывать в массив?
   formList.forEach(form => {
@@ -68,5 +70,3 @@ function setButtonState(inputList, button, classes) {
 function hasInvalidInput(inputList) {
   return inputList.some(input => !input.validity.valid);
 }
-
-export { enableValidation, clearValidation };
