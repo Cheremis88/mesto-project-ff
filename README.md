@@ -1,2 +1,5 @@
 # Проектная работа Mesto
-https://github.com/Cheremis88/mesto-project-ff.git
+
+[Репозиторий](https://github.com/Cheremis88/mesto-project-ff.git)
+
+[Деплой](https://cheremis88.github.io/mesto-project-ff/)

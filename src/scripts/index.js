@@ -4,7 +4,7 @@ import { createCard, handleLikeCard } from './card.js';
 import { enableValidation, clearValidation } from './validation.js';
 import { 
   profileButton, profilePopup, profileName, profileAbout, profilePhoto,
-  profileForm, profileFormName, profileFormAbout, newCardButton, newCardPopup,  // Как лучше оформлять большой блок импорта?
+  profileForm, profileFormName, profileFormAbout, newCardButton, newCardPopup,
   newCardForm, newCardFormName, newCardFormLink, imagePopup, imageFull,
   imageCaption, popups, cardList, validationConfig, avatarPopup, avatarForm,
   avatarFormLink, deleteCardPopup, deleteCardForm

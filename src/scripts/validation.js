@@ -1,7 +1,7 @@
 export { enableValidation, clearValidation };
 
 function enableValidation(classes) {
-  const formList = document.querySelectorAll(classes.formSelector); // Надо ли на всякий случай всегда преобразовывать в массив?
+  const formList = document.querySelectorAll(classes.formSelector);
   formList.forEach(form => {
     setInputEvents(form, classes);
   });
